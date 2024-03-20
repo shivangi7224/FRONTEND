@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+<body>
+    <script>
+        // Function to perform basic arithmetic operations
+        function calculate(expression) {
+            try {
+                return eval(expression);
+            } catch (error) {
+                return 'Error';
+            }
+        }
+
+        // Function to handle button clicks
+        function handleButtonClick(value) {
+            const display = document.getElementById('display');
+
+            if (value === '=') {
+                display.textContent = calculate(display.textContent);
+            } else if (value === 'C') {
+                display.textContent = '';
+            } else {
+                display.textContent += value;
+            }
+        }
+
+        // Create a simple UI for the calculator
+        function createCalculatorUI() {
+            const buttons = ['7', '8', '9', '/', '4', '5', '6', '*', '1', '2', '3', '-', '0', '.', '=', '+', 'C'];
+
+            const calculatorContainer = document.createElement('div');
+            calculatorContainer.style.display = 'grid';
+            calculatorContainer.style.gridTemplateColumns = 'repeat(4, 1fr)';
+            calculatorContainer.style.gridTemplateRows = 'repeat(5, 1fr)';
+            calculatorContainer.style.gap = '10px';
+            calculatorContainer.style.maxWidth = '400px';
+            calculatorContainer.style.margin = 'auto';
+            calculatorContainer.style.padding = '20px';
+            calculatorContainer.style.border = '1px solid #ccc';
+            calculatorContainer.style.borderRadius = '10px';
+            calculatorContainer.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+
+            const display = document.createElement('div');
+            display.id = 'display';
+            display.style.gridColumn = 'span 4';
+            display.style.padding = '10px';
+            display.style.textAlign = 'right';
+            display.style.border = '1px solid #ccc';
+            display.style.borderRadius = '5px';
+            display.style.marginBottom = '10px';
+            display.style.fontSize = '1.5rem';
+
+            calculatorContainer.appendChild(display);
+
+            buttons.forEach(value => {
+                const button = document.createElement('button');
+                button.textContent = value;
+                button.style.padding = '10px';
+                button.style.fontSize = '1.2rem';
+                button.style.border = '1px solid #ccc';
+                button.style.borderRadius = '5px';
+                button.style.cursor = 'pointer';
+                button.addEventListener('click', () => handleButtonClick(value));
+                calculatorContainer.appendChild(button);
+            });
+
+            document.body.appendChild(calculatorContainer);
+        }
+
+        // Handle keyboard events
+        document.addEventListener('keydown', (event) => {
+            const key = event.key;
+            const validKeys = ['7', '8', '9', '/', '4', '5', '6', '*', '1', '2', '3', '-', '0', '.', '=', '+', 'C'];
+
+            if (validKeys.includes(key)) {
+                handleButtonClick(key);
+            }
+        });
+
+        // Create the calculator UI when the script is executed
+        createCalculatorUI();
+    </script>
+</body>
+</html>
